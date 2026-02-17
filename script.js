@@ -60,8 +60,22 @@ function cell() {
 }
 
 function player(name, mark) {
+    let playerName = name
+    let playerMark = mark
+
+    const getName = function () {
+        return playerName
+    }
+    const getMark = function () {
+        return playerMark
+    }
+    const updateName = function (newName) {
+        playerName = newName
+        return playerName
+    }
+
     return { 
-        name, mark
+        getName, getMark, updateName
     }
 }
 
@@ -70,6 +84,7 @@ function gameController() {
 
     const playerOne = player('GuiGui', 'X')
     const playerTwo = player('Josie', 'O')
+
 
     let activePlayer = ""
 
@@ -95,12 +110,12 @@ function gameController() {
     const playTurn = function (row, colums) {
         console.log(activePlayer);
         
-        let mark = activePlayer.mark
+        let mark = activePlayer.getMark()
         const success = board.placeMark(row, colums, mark)
         if (success) {
-            console.log(`${activePlayer.name} has played,`);
+            console.log(`${activePlayer.getName()} has played,`);
             if (checkWinner()) {
-                console.log(`${activePlayer.name} win !!!!`);
+                console.log(`${activePlayer.getName()} win !!!!`);
                 return
             }
             if (checkDraw()) {
@@ -110,7 +125,7 @@ function gameController() {
             switchTurn()
         }
         else {
-            console.log(`${activePlayer.name} picked a bad case`);
+            console.log(`${activePlayer.getName()} picked a bad case`);
         }
     }
 
@@ -198,13 +213,13 @@ function screenController() {
     const renderPlayerName = function () {
         const playerOneElement = document.querySelector('#player-one')
         const playerTwoElement = document.querySelector('#player-two')
-        playerOneElement.textContent = game.playerOne.name
-        playerTwoElement.textContent = game.playerTwo.name
+        playerOneElement.textContent = game.playerOne.getName()
+        playerTwoElement.textContent = game.playerTwo.getName()
     }
     renderPlayerName()
 
     const renderPlayerTurn = function () {
-        let nextPlayer =  game.getActivePlayer().name
+        let nextPlayer =  game.getActivePlayer().getName()
         const nextPlayerElement = document.querySelector('#player-turn')
         nextPlayerElement.textContent = `Next player is: ${nextPlayer}`
     }
@@ -221,7 +236,7 @@ function screenController() {
     const renderResult = function () {
         const resultElement = document.querySelector('#result')
         if (game.checkWinner()) {
-            let winner = game.getActivePlayer().name
+            let winner = game.getActivePlayer().getName()
             resultElement.textContent = `${winner} win`
         }
         else if (game.checkDraw()) {
@@ -232,6 +247,33 @@ function screenController() {
         }
 
     }
+
+
+    const dialog = document.querySelector('#dialog')
+
+    const btnStart = document.querySelector('#btn-start')
+    btnStart.addEventListener('click', function (event) {
+        dialog.showModal()
+    })
+
+    const btnValidateName = document.querySelector('#validate-name')
+    btnValidateName.addEventListener('click', function (event) {
+        event.preventDefault()
+        const playerOneName = document.querySelector('#player-one-name')
+        const playerTwoName = document.querySelector('#player-two-name')
+
+        console.log(`${playerOneName.value} et ${playerTwoName.value}`);
+        
+        game.playerOne.updateName(playerOneName.value)
+        game.playerTwo.updateName(playerTwoName.value)
+        
+        renderPlayerName()
+
+        const form = document.querySelector('form')
+        form.reset()
+        dialog.close()
+        renderPlayerTurn()
+    })
 
     return { getGame , renderBoard, renderPlayerTurn}
 }
