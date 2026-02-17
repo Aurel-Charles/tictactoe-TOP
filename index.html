@@ -9,25 +9,28 @@
 </head>
 <body>
     <h1>Tic Tac Toe</h1>
-    
-    <div>
-        <p>Player 1</p>
-        <p id="player-one"></p>
-    </div>
-    <div>
-        <p>Player 2</p>
-        <p id="player-two"></p>
+    <div class="players-card">
+        <div class="player player-one-card">
+            <p>P1</p>
+            <p id="player-one"></p>
+        </div>
+        <div class="player player-two-card">
+            <p>P2</p>
+            <p id="player-two"></p>
+        </div>
     </div>
 
     <div id="board">
 
     </div>
     
-    <div>
+    <div class="info">
         <p id="player-turn"></p>
         <p id="result"></p>
     </div>
-    <button id="btn-start">Start</button>
-    <button id="btn-reset">Reset</button>
+    <div class="cta">
+        <button id="btn-start">Start</button>
+        <button id="btn-reset">Reset</button>
+    </div>
 </body>
 </html>

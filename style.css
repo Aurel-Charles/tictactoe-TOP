@@ -1,12 +1,109 @@
-#board{
-    display: grid;
-    grid-template-columns: repeat(3, 50px);
-    grid-template-rows: repeat(3, 50px);
+/* 1. Use a more-intuitive box-sizing model */
+*, *::before, *::after {
+    box-sizing: border-box;
+  }
+  
+  /* 2. Remove default margin */
+  *:not(dialog) {
+    margin: 0;
+  }
+  
+  /* 3. Enable keyword animations */
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      interpolate-size: allow-keywords;
+    }
+  }
+  
+  body {
+    /* 4. Add accessible line-height */
+    line-height: 1.5;
+    /* 5. Improve text rendering */
+    -webkit-font-smoothing: antialiased;
+  }
+  
+  /* 6. Improve media defaults */
+  img, picture, video, canvas, svg {
+    display: block;
+    max-width: 100%;
+  }
+  
+  /* 7. Inherit fonts for form controls */
+  input, button, textarea, select {
+    font: inherit;
+  }
+  
+  /* 8. Avoid text overflows */
+  p, h1, h2, h3, h4, h5, h6 {
+    overflow-wrap: break-word;
+  }
+  
+  /* 9. Improve line wrapping */
+  p {
+    text-wrap: pretty;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    text-wrap: balance;
+  }
+  
+  /*
+    10. Create a root stacking context
+  */
+  #root, #__next {
+    isolation: isolate;
+  }
+
+h1{
+    text-align: center;
+    margin-bottom: 3rem;
 }
 
 .cell{
     display: flex;
     justify-content: center;
     align-items: center;
+    border: solid 2px black;
+    margin: 1px;
+}
+
+.player{
+    display: flex;
+    gap: 0.7rem;
     border: solid 1px black;
+    justify-content: center;
+}
+
+.player-one-card{
+    background-color: blue;
+    min-width: 150px;
+}
+.player-two-card{
+    background-color: yellow;
+    min-width: 150px;
+}
+
+.players-card{
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-bottom: 3rem;
+}
+
+#board{
+    display: grid;
+    grid-template-columns: repeat(3, 50px);
+    grid-template-rows: repeat(3, 50px);
+    justify-content: center;
+    margin-bottom: 3rem;
+}
+
+.info{
+    text-align: center;
+}
+
+.cta{
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin: 1rem;
 }

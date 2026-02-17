@@ -68,8 +68,8 @@ function player(name, mark) {
 function gameController() {
     const board = gameBoard()
 
-    const playerOne = player('Player One', 'X')
-    const playerTwo = player('Player Two', 'O')
+    const playerOne = player('GuiGui', 'X')
+    const playerTwo = player('Josie', 'O')
 
     let activePlayer = ""
 
@@ -90,11 +90,9 @@ function gameController() {
         }
         return activePlayer
     }
+    switchTurn()
 
     const playTurn = function (row, colums) {
-        if (activePlayer === "") {
-            switchTurn() // dertermine le premier joueur
-        }
         console.log(activePlayer);
         
         let mark = activePlayer.mark
@@ -152,6 +150,7 @@ function gameController() {
     const resetGame = function () {
         board.resetBoard()
         activePlayer = ""
+        switchTurn()
     }
 
     return {getActivePlayer, switchTurn, playTurn, board, playerOne, playerTwo, checkWinner, checkDraw , resetGame}
@@ -168,28 +167,76 @@ function screenController() {
 
     const boardElement = document.querySelector('#board')
 
+
     const renderBoard = function () {
-        const grid = game.board.getBoard()
+        boardElement.replaceChildren()
+        const grid = game.board.printBoard()
         for (let i = 0; i < 3; i++) {
             for (let j = 0; j < 3; j++) {
                 const cellValue = grid[i][j]
-
                 const cell = document.createElement('div')
                 cell.setAttribute('class', 'cell')
-                cell.textContent = "X"
+
+                // addEventListener
+                cell.addEventListener('click', function () {
+                    if (game.checkWinner() || game.checkDraw()) {
+                        return
+                    }
+                    game.playTurn(i, j)
+                    renderBoard()
+                    renderPlayerTurn()
+                    renderResult()
+                })
+
+                cell.textContent = cellValue
                 boardElement.appendChild(cell)
             }
         }
+
     }
 
+    const renderPlayerName = function () {
+        const playerOneElement = document.querySelector('#player-one')
+        const playerTwoElement = document.querySelector('#player-two')
+        playerOneElement.textContent = game.playerOne.name
+        playerTwoElement.textContent = game.playerTwo.name
+    }
+    renderPlayerName()
 
+    const renderPlayerTurn = function () {
+        let nextPlayer =  game.getActivePlayer().name
+        const nextPlayerElement = document.querySelector('#player-turn')
+        nextPlayerElement.textContent = `Next player is: ${nextPlayer}`
+    }
+    renderPlayerTurn()
 
-    return { getGame , renderBoard}
+    const btnResetGame = document.querySelector('#btn-reset')
+    btnResetGame.addEventListener('click', function () {
+        game.resetGame()
+        renderBoard()  
+        renderPlayerTurn()
+        renderResult()
+    })
+
+    const renderResult = function () {
+        const resultElement = document.querySelector('#result')
+        if (game.checkWinner()) {
+            let winner = game.getActivePlayer().name
+            resultElement.textContent = `${winner} win`
+        }
+        else if (game.checkDraw()) {
+            resultElement.textContent = `It's a draw!`
+        }
+        else{
+            resultElement.textContent = ""
+        }
+
+    }
+
+    return { getGame , renderBoard, renderPlayerTurn}
 }
 
 
-screenController()
-screenController().renderBoard()
-console.log(screenController().getGame().board.getBoard());
-
+const screen = screenController()
+screen.renderBoard()
 
