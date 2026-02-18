@@ -296,6 +296,11 @@ function screenController() {
         dialog.showModal()
     })
 
+    const btnClose = document.querySelector('#close-dialog')
+    btnClose.addEventListener('click', function (event) {
+        dialog.close()
+    })
+
     const btnValidateName = document.querySelector('#validate-name')
     btnValidateName.addEventListener('click', function (event) {
         event.preventDefault()

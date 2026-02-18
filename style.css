@@ -54,19 +54,22 @@
   }
 
 body{
-    background-image: linear-gradient(to right top, #d16ba5, #c777b9, #ba83ca, #aa8fd8, #9a9ae1, #8aa7ec, #79b3f4, #69bff8, #52cffe, #41dfff, #46eefa, #5ffbf1);
+    background-image: linear-gradient(to left bottom, #9c6bd1, #8663c6, #6f5cbb, #5854af, #404ca3, #3159ad, #1f66b5, #0072bc, #0095d5, #00b8e5, #00daee, #5ffbf1);
     min-height: 100vh;
 }
 
 .container{
-    display: flex;
+    display: grid;
+    grid-template-columns: 20vw auto 20vw;
+
     align-items: center;
     justify-content: space-around;
 }
+
   
 h1{
     text-align: center;
-
+    font-size: 3rem;
     margin: 3rem 0;
     font-family: "Frijole", system-ui;
 }
@@ -187,6 +190,7 @@ p, button, dialog{
         flex-direction: column;
 
     }
+
 }
 
 .name {
@@ -226,7 +230,41 @@ form > div {
     display: contents;
 }
 
+.cta-dialog{
+    margin: 1rem 0 0 0;
+}
 #validate-name {
-    grid-column: 1 / -1;
     justify-self: center;
+    width: 3rem;
+}
+#close-dialog {
+    width: 3rem;
+    justify-self: center;
+}
+
+h2{
+    margin-bottom: 1rem;
+}
+
+.cta{
+    display: flex;
+    flex-direction: column;
+    margin-top: 3rem;
+}
+
+.info{
+    font-size: 2rem;
+}
+
+.cta > button{
+    font-size: 2rem;
+}
+
+button{
+    background-color: #ba83ca;
+}
+
+button:hover{
+    color: bisque;
+    background-color: rgb(40, 43, 107);
 }
