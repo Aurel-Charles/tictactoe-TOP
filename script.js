@@ -149,19 +149,19 @@ function gameController() {
         for (let i = 0; i < 3; i++) {
             const row = grid[i];
             if ( row[0] === row[2] && row[1] === row[2] && row[0] !== "" ) {
-                return true
+                return [[i, 0], [i, 1], [i, 2]]
             }
         }
         for (let j = 0; j < 3; j++) {
             if ( grid[0][j] === grid[1][j] && grid[1][j] === grid[2][j] && grid[0][j] !== "" ) {
-                return true
+                return [[0, j], [1, j], [2, j]]
             }
         }
         if (grid[0][0] === grid[1][1] && grid[1][1] === grid[2][2] && grid[0][0] !== "" ) {
-            return true
+            return [[0, 0], [1, 1], [2, 2]]
         }
         if (grid[2][0] === grid[1][1] && grid[1][1] === grid[0][2] && grid[2][0] !== "" ) {
-            return true
+            return [[2, 0], [1, 1], [0, 2]]
         }
     }
 
@@ -209,6 +209,8 @@ function screenController() {
     const renderBoard = function () {
         boardElement.replaceChildren()
         const grid = game.board.printBoard()
+        const winningCells = game.checkWinner()
+
         for (let i = 0; i < 3; i++) {
             for (let j = 0; j < 3; j++) {
                 const cellValue = grid[i][j]
@@ -220,6 +222,14 @@ function screenController() {
                 }
                 if (cellValue === 'O') {
                     cell.classList.add('cell-o')
+                }
+
+                if (winningCells && winningCells.some(c => c[0] === i && c[1] === j)) {
+                    cell.classList.add('winning-cell')   
+                }
+
+                if (game.checkDraw()) {
+                    cell.classList.add('draw-cell')
                 }
 
                 // addEventListener

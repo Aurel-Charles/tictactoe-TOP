@@ -268,3 +268,33 @@ button:hover{
     color: bisque;
     background-color: rgb(40, 43, 107);
 }
+
+
+
+.winning-cell {
+    text-shadow: 1px 1px 0px rgb(35, 108, 187);
+    animation: win 0.5s ease forwards;
+}
+
+@keyframes win {
+    from {
+        background-color: rgb(15, 12, 52);
+    }
+    to {
+        background-color: rgb(127, 224, 127);
+    }
+}
+
+.draw-cell{
+    animation: draw 0.5s ease forwards;
+    text-shadow: 1px 1px 0px rgb(35, 108, 187);
+}
+
+@keyframes draw {
+    from {
+        background-color: rgb(15, 12, 52);
+    }
+    to {
+        background-color: rgb(255, 216, 158);
+    }
+}
