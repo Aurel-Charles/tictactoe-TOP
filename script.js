@@ -94,8 +94,8 @@ function player(name, mark) {
 function gameController() {
     const board = gameBoard()
 
-    const playerOne = player('GuiGui', 'X')
-    const playerTwo = player('Josie', 'O')
+    const playerOne = player('', 'X')
+    const playerTwo = player('', 'O')
 
 
     let activePlayer = ""
@@ -291,6 +291,11 @@ function screenController() {
 
     const dialog = document.querySelector('#dialog')
 
+    const openDialog = function () {
+        dialog.showModal()
+    }
+    openDialog()
+
     const btnStart = document.querySelector('#btn-start')
     btnStart.addEventListener('click', function (event) {
         dialog.showModal()
@@ -328,6 +333,8 @@ function screenController() {
 }
 
 
-const screen = screenController()
-screen.renderBoard()
+function main() {
+    screenController()
+}
 
+main()
