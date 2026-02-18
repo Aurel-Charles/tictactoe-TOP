@@ -62,6 +62,7 @@ function cell() {
 function player(name, mark) {
     let playerName = name
     let playerMark = mark
+    let playerScore = 0
 
     const getName = function () {
         return playerName
@@ -73,9 +74,20 @@ function player(name, mark) {
         playerName = newName
         return playerName
     }
+    const getScore = function () {
+        return playerScore
+    }
+    const addPoint = function () {
+        playerScore += 1
+        return playerScore
+    }
+    const resetScore = function () {
+        playerScore = 0
+        return playerScore
+    }
 
     return { 
-        getName, getMark, updateName
+        getName, getMark, updateName, getScore, addPoint, resetScore
     }
 }
 
@@ -115,7 +127,10 @@ function gameController() {
         if (success) {
             console.log(`${activePlayer.getName()} has played,`);
             if (checkWinner()) {
+                activePlayer.addPoint()
                 console.log(`${activePlayer.getName()} win !!!!`);
+                console.log(`${playerOne.getName()}: ${playerOne.getScore()}`);
+                console.log(`${playerTwo.getName()}: ${playerTwo.getScore()}`);
                 return
             }
             if (checkDraw()) {
@@ -168,7 +183,15 @@ function gameController() {
         switchTurn()
     }
 
-    return {getActivePlayer, switchTurn, playTurn, board, playerOne, playerTwo, checkWinner, checkDraw , resetGame}
+    const resetAll = function () {
+        board.resetBoard()
+        activePlayer = ""
+        playerOne.resetScore()
+        playerTwo.resetScore()
+        switchTurn()
+    }
+
+    return {getActivePlayer, switchTurn, playTurn, board, playerOne, playerTwo, checkWinner, checkDraw , resetGame, resetAll}
 }
 
 
@@ -192,6 +215,13 @@ function screenController() {
                 const cell = document.createElement('div')
                 cell.setAttribute('class', 'cell')
 
+                if (cellValue === 'X') {
+                    cell.classList.add('cell-x')
+                }
+                if (cellValue === 'O') {
+                    cell.classList.add('cell-o')
+                }
+
                 // addEventListener
                 cell.addEventListener('click', function () {
                     if (game.checkWinner() || game.checkDraw()) {
@@ -201,6 +231,7 @@ function screenController() {
                     renderBoard()
                     renderPlayerTurn()
                     renderResult()
+                    renderScore()
                 })
 
                 cell.textContent = cellValue
@@ -245,8 +276,17 @@ function screenController() {
         else{
             resultElement.textContent = ""
         }
-
     }
+
+    const renderScore = function () {
+        
+        const scorePlayerOneElement = document.querySelector('#player-one-score')
+        const scorePlayerTwoElement = document.querySelector('#player-two-score')
+
+        scorePlayerOneElement.textContent = game.playerOne.getScore()
+        scorePlayerTwoElement.textContent = game.playerTwo.getScore()
+    }
+    renderScore()
 
 
     const dialog = document.querySelector('#dialog')
@@ -267,15 +307,19 @@ function screenController() {
         game.playerOne.updateName(playerOneName.value)
         game.playerTwo.updateName(playerTwoName.value)
         
+        game.resetAll()
         renderPlayerName()
+        renderBoard()
+        renderPlayerTurn()
+        renderResult()
+        renderScore()
 
         const form = document.querySelector('form')
         form.reset()
         dialog.close()
-        renderPlayerTurn()
     })
 
-    return { getGame , renderBoard, renderPlayerTurn}
+    return { getGame , renderBoard,renderScore, renderPlayerTurn}
 }
 
 
