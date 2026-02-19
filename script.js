@@ -166,6 +166,9 @@ function gameController() {
     }
 
     const checkDraw = function () {
+        if (checkWinner()) {
+            return false
+        }
         const grid  = board.printBoard()
         for (let i = 0; i < 3; i++) {
             for (let j = 0; j < 3; j++) {
