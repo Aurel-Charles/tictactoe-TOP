@@ -182,7 +182,7 @@ function gameController() {
 
     const resetGame = function () {
         board.resetBoard()
-        activePlayer = ""
+        // activePlayer = ""
         switchTurn()
     }
 

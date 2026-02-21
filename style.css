@@ -114,13 +114,10 @@ p, button, dialog{
 
 }
 
-.player-one-card{
-    background-color: rgb(247, 232, 206);
+.player-two-card, .player-one-card{
+    background-color:rgb(34, 25, 10);
     min-width: 150px;
-}
-.player-two-card{
-    background-color:rgb(247, 232, 206);
-    min-width: 150px;
+    color: bisque;
 }
 
 .players-card{
@@ -159,8 +156,8 @@ p, button, dialog{
 
 .player > p:first-child {
     font-weight: bold;
-    background-color: black;
-    color: bisque;
+    background-color: bisque;
+    color: black;
     align-self: stretch;
     text-align: center;
 }
@@ -199,7 +196,7 @@ p, button, dialog{
 
 .mark{
     margin: 1px;
-    font-size: 70px;
+    font-size: 50px;
     font-family: "Anta", sans-serif;
     border-radius: 10px;
 }
